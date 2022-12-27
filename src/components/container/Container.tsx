@@ -1,53 +1,36 @@
-import React, {useState} from 'react'
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
 import {NavBar} from "../navbar/NavBar";
-import {Button} from "@mui/material";
-import {styled} from "@mui/material/styles";
-import {DrawerComponent, drawerWidth} from "../drawer/Drawer";
+import {DrawerHeader, DrawerStyled} from "../drawer/Drawer";
 
-interface Props { }
 
-const Content = styled('div')(({ theme }) => ({
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3)
-}));
+export const Container: React.FC = () => {
+    const [open, setOpen] = React.useState(false);
 
-export const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
-
-export const Container: React.FC<Props> = () => {
-    const [open, setOpen] = useState(false);
-
-    const handleDrawerToggle = () => {
-        setOpen(!open);
+    const handleDrawerOpen = () => {
+        setOpen(true);
     };
-      return (
-          <div style={{display: 'flex'}}>
-              <NavBar
-                  handleDrawerToggle={handleDrawerToggle}
-              />
-              <DrawerComponent
-                  variant="temporary"
-                  open={open}
-                  onClose={handleDrawerToggle}
-                  sx={{
-                      display: { xs: 'block', md: 'none' },
-                      '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-                      '& .MuiBox-root': { width: drawerWidth },
-                  }}
-              />
-              <DrawerComponent
-                  variant="permanent"
-                  sx={{
-                      display: { xs: 'none', md: 'block' },
-                      '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-                  }}
-                  open
-              />
-              <Content>
-                  <Offset/>
-                  <div>mejor ponog ootra cosa</div>
-                  <Button>tocame</Button>
-              </Content>
-          </div>
-      )
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
+
+    return (
+        <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <NavBar
+                open={open}
+                handleDrawerOpen={handleDrawerOpen}
+            />
+            <DrawerStyled
+                open={open}
+                handleDrawerClose={handleDrawerClose}
+            />
+            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                <DrawerHeader/>
+            </Box>
+        </Box>
+    );
 }
+
