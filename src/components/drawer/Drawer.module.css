@@ -1,0 +1,11 @@
+.padding {
+    margin-left: 0 !important;
+}
+.drawer {
+    width: 240px;
+    flex-shrink: 0;
+}
+.drawer_paper {
+    width: 240px;
+}
+
