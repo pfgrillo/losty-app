@@ -8,10 +8,12 @@ import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from "@mui/material/Drawer";
 import {Divider, List, ListItem, ListItemIcon, ListItemButton, ListItemText} from "@mui/material";
 import {deepPurple} from "@mui/material/colors";
+import {NavLink} from "react-router-dom";
+import {MyNavLink} from "../navLink/CustomNavLink";
 
 interface Props {
-    open: boolean;
-    handleDrawerClose: () => void;
+    open?: boolean;
+    handleDrawerClose?: () => void;
 }
 
 export const drawerWidth = 240;
@@ -62,6 +64,7 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
     ...theme.mixins.toolbar,
 }));
 
+
 export const DrawerStyled: React.FC<Props> = ({open, handleDrawerClose}: Props) => {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const theme = useTheme();
@@ -70,7 +73,6 @@ export const DrawerStyled: React.FC<Props> = ({open, handleDrawerClose}: Props) 
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
         index: number,
     ) => {
-        console.log(index);
         setSelectedIndex(index);
     };
 
@@ -84,7 +86,7 @@ export const DrawerStyled: React.FC<Props> = ({open, handleDrawerClose}: Props) 
           <Divider />
           <List>
               {['Map', 'Found', 'Lost', 'Messages', 'Account', 'Logout'].map((text, index) => (
-                  <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                  <ListItem component={MyNavLink} key={text} disablePadding sx={{ display: 'block' }} to={`/${text.toLowerCase()}`}>
                       <ListItemButton
                           selected={selectedIndex === index}
                           onClick={(event) => handleListItemClick(event, index)}
@@ -116,6 +118,7 @@ export const DrawerStyled: React.FC<Props> = ({open, handleDrawerClose}: Props) 
                               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                           </ListItemIcon>
                           <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+
                       </ListItemButton>
                   </ListItem>
               ))}
